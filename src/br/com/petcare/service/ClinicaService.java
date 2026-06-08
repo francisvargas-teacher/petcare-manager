@@ -21,24 +21,44 @@ public class ClinicaService {
     }
 
     public Tutor cadastrarTutor(String nome, String telefone, String email) {
+        if (textoVazio(nome)) {
+            throw new IllegalArgumentException("Nome do tutor não pode ser vazio.");
+        }
+
+        if (textoVazio(telefone)) {
+            throw new IllegalArgumentException("Telefone não pode ser vazio.");
+        }
+
         Tutor tutor = new Tutor(proximoIdTutor++, nome, telefone, email);
         banco.salvarTutor(tutor);
         return tutor;
     }
 
     public Cachorro cadastrarCachorro(String nome, int idade, Tutor tutor, String porte) {
+        validarAnimal(nome, idade);
+
         Cachorro cachorro = new Cachorro(proximoIdAnimal++, nome, idade, tutor, porte);
         banco.salvarAnimal(cachorro);
         return cachorro;
     }
 
     public Gato cadastrarGato(String nome, int idade, Tutor tutor, boolean castrado) {
+        validarAnimal(nome, idade);
+
         Gato gato = new Gato(proximoIdAnimal++, nome, idade, tutor, castrado);
         banco.salvarAnimal(gato);
         return gato;
     }
 
     public Consulta agendarConsulta(Animal animal, LocalDateTime dataHora, String motivo) {
+        if (animal == null) {
+            throw new IllegalArgumentException("Consulta não pode ser agendada sem animal.");
+        }
+
+        if (textoVazio(motivo)) {
+            throw new IllegalArgumentException("Motivo da consulta não pode ser vazio.");
+        }
+
         Consulta consulta = new Consulta(proximoIdConsulta++, animal, dataHora, motivo);
         banco.salvarConsulta(consulta);
         return consulta;
@@ -62,5 +82,19 @@ public class ClinicaService {
 
     public Tutor buscarTutorPorId(int id) {
         return banco.buscarTutorPorId(id);
+    }
+
+    private void validarAnimal(String nome, int idade) {
+        if (textoVazio(nome)) {
+            throw new IllegalArgumentException("Nome do animal não pode ser vazio.");
+        }
+
+        if (idade < 0) {
+            throw new IllegalArgumentException("Idade do animal não pode ser negativa.");
+        }
+    }
+
+    private boolean textoVazio(String texto) {
+        return texto == null || texto.trim().isEmpty();
     }
 }
