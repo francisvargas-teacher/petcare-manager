@@ -66,5 +66,19 @@ public class Main {
         for (Consulta consulta : clinicaService.listarConsultas()) {
             System.out.println(consulta);
         }
+        System.out.println("\n=== BUSCA POR NOME ===");
+        for (Animal animal : clinicaService.buscarAnimaisPorNome("Thor")) {
+            System.out.println(animal);
+        }
+
+        System.out.println("\n=== BUSCA POR ESPÉCIE ===");
+        for (Animal animal : clinicaService.buscarAnimaisPorEspecie("Cachorro")) {
+            System.out.println(animal);
+        }
+
+        System.out.println("\n=== BUSCA POR TUTOR ===");
+        for (Animal animal : clinicaService.buscarAnimaisPorNomeTutor("Ana")) {
+            System.out.println(animal);
+        }
     }
 }
