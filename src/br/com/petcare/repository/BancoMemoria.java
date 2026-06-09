@@ -2,6 +2,7 @@ package br.com.petcare.repository;
 
 import br.com.petcare.model.Animal;
 import br.com.petcare.model.Consulta;
+import br.com.petcare.model.Prontuario;
 import br.com.petcare.model.Tutor;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class BancoMemoria {
     private List<Tutor> tutores = new ArrayList<>();
     private List<Animal> animais = new ArrayList<>();
     private List<Consulta> consultas = new ArrayList<>();
+    private List<Prontuario> prontuarios = new ArrayList<>();
 
     public void salvarTutor(Tutor tutor) {
         tutores.add(tutor);
@@ -24,6 +26,10 @@ public class BancoMemoria {
         consultas.add(consulta);
     }
 
+    public void salvarProntuario(Prontuario prontuario) {
+        prontuarios.add(prontuario);
+    }
+
     public List<Tutor> listarTutores() {
         return tutores;
     }
@@ -34,6 +40,14 @@ public class BancoMemoria {
 
     public List<Consulta> listarConsultas() {
         return consultas;
+    }
+
+    public List<Prontuario> listarProntuarios() {
+        return prontuarios;
+    }
+
+    public List<Prontuario> getProntuarios() {
+        return prontuarios;
     }
 
     public Tutor buscarTutorPorId(int id) {

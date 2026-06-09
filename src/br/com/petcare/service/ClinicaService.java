@@ -4,10 +4,13 @@ import br.com.petcare.model.Animal;
 import br.com.petcare.model.Cachorro;
 import br.com.petcare.model.Consulta;
 import br.com.petcare.model.Gato;
+import br.com.petcare.model.Prontuario;
 import br.com.petcare.model.Tutor;
 import br.com.petcare.repository.BancoMemoria;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClinicaService {
@@ -15,6 +18,7 @@ public class ClinicaService {
     private int proximoIdTutor = 1;
     private int proximoIdAnimal = 1;
     private int proximoIdConsulta = 1;
+    private int proximoIdProntuario = 1;
 
     public ClinicaService(BancoMemoria banco) {
         this.banco = banco;
@@ -44,6 +48,18 @@ public class ClinicaService {
         return consulta;
     }
 
+    public Prontuario registrarProntuario(Animal animal, String descricao, String nomeVeterinario) {
+        Prontuario prontuario = new Prontuario(
+                proximoIdProntuario++,
+                animal,
+                LocalDate.now(),
+                descricao,
+                nomeVeterinario
+        );
+        banco.salvarProntuario(prontuario);
+        return prontuario;
+    }
+
     public List<Tutor> listarTutores() {
         return banco.listarTutores();
     }
@@ -54,6 +70,22 @@ public class ClinicaService {
 
     public List<Consulta> listarConsultas() {
         return banco.listarConsultas();
+    }
+
+    public List<Prontuario> listarProntuarios() {
+        return banco.listarProntuarios();
+    }
+
+    public List<Prontuario> listarProntuariosPorAnimal(Animal animal) {
+        List<Prontuario> prontuariosDoAnimal = new ArrayList<>();
+
+        for (Prontuario prontuario : banco.listarProntuarios()) {
+            if (prontuario.getAnimal() == animal) {
+                prontuariosDoAnimal.add(prontuario);
+            }
+        }
+
+        return prontuariosDoAnimal;
     }
 
     public Animal buscarAnimalPorId(int id) {
