@@ -2,6 +2,7 @@ package br.com.petcare;
 
 import br.com.petcare.model.Animal;
 import br.com.petcare.model.Consulta;
+import br.com.petcare.model.Prontuario;
 import br.com.petcare.model.Tutor;
 import br.com.petcare.repository.BancoMemoria;
 import br.com.petcare.service.ClinicaService;
@@ -51,6 +52,12 @@ public class Main {
                 "Consulta de rotina"
         );
 
+        Prontuario prontuario = clinicaService.registrarProntuario(
+                cachorro,
+                "Animal apresentou boa recuperação após vacinação.",
+                "Dra. Marina Costa"
+        );
+
         System.out.println("=== TUTORES ===");
         for (Tutor tutor : clinicaService.listarTutores()) {
             System.out.println(tutor);
@@ -65,6 +72,20 @@ public class Main {
         System.out.println("\n=== CONSULTAS ===");
         for (Consulta consulta : clinicaService.listarConsultas()) {
             System.out.println(consulta);
+        }
+
+        System.out.println("\n=== FEATURE 05 - PRONTUARIO DO ANIMAL ===");
+        System.out.println("Prontuario registrado:");
+        System.out.println(prontuario);
+
+        System.out.println("\nTodos os prontuarios:");
+        for (Prontuario prontuarioCadastrado : clinicaService.listarProntuarios()) {
+            System.out.println(prontuarioCadastrado);
+        }
+
+        System.out.println("\nProntuarios do animal " + cachorro.getNome() + ":");
+        for (Prontuario prontuarioDoAnimal : clinicaService.listarProntuariosPorAnimal(cachorro)) {
+            System.out.println(prontuarioDoAnimal);
         }
     }
 }

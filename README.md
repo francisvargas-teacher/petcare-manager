@@ -166,11 +166,11 @@ Sugestão de branch:
 git checkout -b feature/controle-vacinacao
 ```
 
-## Feature 05 — Prontuário do animal
+## Feature 05 — Prontuário do Animal
 
-Criar uma classe `Prontuario` para registrar histórico clínico dos animais.
+Implementada funcionalidade de prontuário clínico para registrar o histórico dos animais cadastrados na clínica.
 
-A classe pode conter:
+Foi criada a classe `Prontuario`, contendo:
 
 - ID
 - Animal
@@ -178,10 +178,52 @@ A classe pode conter:
 - Descrição
 - Nome do veterinário
 
-Sugestão de branch:
+Arquivos alterados/criados:
+
+- `src/br/com/petcare/model/Prontuario.java`
+- `src/br/com/petcare/repository/BancoMemoria.java`
+- `src/br/com/petcare/service/ClinicaService.java`
+- `src/br/com/petcare/Main.java`
+- `README.md`
+
+Métodos adicionados em `ClinicaService`:
+
+- `registrarProntuario(Animal animal, String descricao, String nomeVeterinario)`
+- `listarProntuarios()`
+- `listarProntuariosPorAnimal(Animal animal)`
+
+Branch usada:
 
 ```bash
 git checkout -b feature/prontuario-animal
+```
+
+Como executar:
+
+```bash
+javac -d out $(find src -name "*.java")
+java -cp out br.com.petcare.Main
+```
+
+No Windows PowerShell:
+
+```powershell
+javac -d out (Get-ChildItem -Recurse -Filter *.java src).FullName
+java -cp out br.com.petcare.Main
+```
+
+Exemplo resumido da funcionalidade:
+
+```java
+Prontuario prontuario = clinicaService.registrarProntuario(
+        cachorro,
+        "Animal apresentou boa recuperação após vacinação.",
+        "Dra. Marina Costa"
+);
+
+System.out.println(prontuario);
+System.out.println(clinicaService.listarProntuarios());
+System.out.println(clinicaService.listarProntuariosPorAnimal(cachorro));
 ```
 
 ## Feature 06 — Cadastro de serviços
