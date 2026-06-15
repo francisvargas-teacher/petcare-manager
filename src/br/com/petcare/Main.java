@@ -8,7 +8,9 @@ import br.com.petcare.view.Menu;
 import java.time.LocalDateTime;
 
 public class Main {
+
     public static void main(String[] args) {
+
         BancoMemoria banco = new BancoMemoria();
         ClinicaService clinicaService = new ClinicaService(banco);
 
