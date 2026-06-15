@@ -1,10 +1,13 @@
 package br.com.petcare.model;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Animal {
     private int id;
     private String nome;
     private int idade;
     private Tutor tutor;
+    private List<Vacina> vacinas = new ArrayList<>();
 
     public Animal(int id, String nome, int idade, Tutor tutor) {
         this.id = id;
@@ -40,6 +43,14 @@ public abstract class Animal {
     public void setTutor(Tutor tutor) {
         this.tutor = tutor;
     }
+
+    public List<Vacina> getVacinas() {
+    return vacinas;
+}
+
+    public void adicionarVacina(Vacina vacina) {
+    vacinas.add(vacina);
+}
 
     public abstract String getEspecie();
 
