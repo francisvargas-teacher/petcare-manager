@@ -5,7 +5,7 @@ import br.com.petcare.model.Atendimento;
 import br.com.petcare.model.Cachorro;
 import br.com.petcare.model.Consulta;
 import br.com.petcare.model.Gato;
-import br.com.petcare.model.ServicoClinica;
+import br.com.petcare.model.StatusConsulta;
 import br.com.petcare.model.Tutor;
 import br.com.petcare.repository.BancoMemoria;
 
@@ -153,5 +153,22 @@ public class ClinicaService {
 
     private boolean textoVazio(String texto) {
         return texto == null || texto.trim().isEmpty();
+    }
+
+    // Feature 09 — Cancelamento de Consulta
+    public String cancelarConsulta(int id) {
+        for (Consulta c : banco.listarConsultas()) {
+            if (c.getId() == id) {
+                if (c.getStatus() == StatusConsulta.REALIZADA) {
+                    return "Erro: consulta #" + id + " já foi REALIZADA e não pode ser cancelada.";
+                }
+                if (c.getStatus() == StatusConsulta.CANCELADA) {
+                    return "Erro: consulta #" + id + " já está CANCELADA.";
+                }
+                c.setStatus(StatusConsulta.CANCELADA);
+                return "Consulta #" + id + " cancelada com sucesso.";
+            }
+        }
+        return "Erro: consulta #" + id + " não encontrada.";
     }
 }
