@@ -11,6 +11,7 @@ import br.com.petcare.repository.BancoMemoria;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.ArrayList;
 
 public class ClinicaService {
 
@@ -170,5 +171,44 @@ public class ClinicaService {
             }
         }
         return "Erro: consulta #" + id + " não encontrada.";
+    }
+
+    public List<Animal> buscarAnimaisPorNome(String nome) {
+        List<Animal> resultado = new ArrayList<>();
+
+        for (Animal animal : banco.listarAnimais()) {
+            if (animal.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                resultado.add(animal);
+            }
+        }
+
+        return resultado;
+    }
+
+    public List<Animal> buscarAnimaisPorEspecie(String especie) {
+        List<Animal> resultado = new ArrayList<>();
+
+        for (Animal animal : banco.listarAnimais()) {
+            if (animal.getEspecie().equalsIgnoreCase(especie)) {
+                resultado.add(animal);
+            }
+        }
+
+        return resultado;
+    }
+
+    public List<Animal> buscarAnimaisPorNomeTutor(String nomeTutor) {
+        List<Animal> resultado = new ArrayList<>();
+
+        for (Animal animal : banco.listarAnimais()) {
+            if (animal.getTutor().getNome()
+                    .toLowerCase()
+                    .contains(nomeTutor.toLowerCase())) {
+
+                resultado.add(animal);
+            }
+        }
+
+        return resultado;
     }
 }

@@ -44,43 +44,19 @@ public class Main {
         for (Consulta consulta : clinicaService.listarConsultas()) {
             System.out.println(consulta);
         }
-
-        // ===== Feature 07: Cadastro de serviços =====
-        System.out.println("\n=== SERVIÇOS CADASTRADOS ===");
-        ServicoClinica consulta    = clinicaService.cadastrarServico("Consulta",  "Consulta clínica geral",        120.00, 30);
-        ServicoClinica banho       = clinicaService.cadastrarServico("Banho",     "Banho completo",                  80.00, 60);
-        ServicoClinica tosa        = clinicaService.cadastrarServico("Tosa",      "Tosa higiênica ou completa",      70.00, 45);
-        ServicoClinica vacinacao   = clinicaService.cadastrarServico("Vacinação", "Aplicação de vacina",             60.00, 15);
-        ServicoClinica cirurgia    = clinicaService.cadastrarServico("Cirurgia",  "Procedimento cirúrgico geral",  1500.00, 120);
-
-        for (ServicoClinica s : clinicaService.listarServicos()) {
-            System.out.println(s);
+        System.out.println("\n=== BUSCA POR NOME ===");
+        for (Animal animal : clinicaService.buscarAnimaisPorNome("Thor")) {
+            System.out.println(animal);
         }
 
-        // ===== Feature 07: Abertura de atendimentos =====
-        System.out.println("\n=== ATENDIMENTOS ===");
+        System.out.println("\n=== BUSCA POR ESPÉCIE ===");
+        for (Animal animal : clinicaService.buscarAnimaisPorEspecie("Cachorro")) {
+            System.out.println(animal);
+        }
 
-        // Atendimento 1 — Thor: banho + tosa + vacinação
-        Atendimento atendimento1 = clinicaService.abrirAtendimento(cachorro, LocalDateTime.now());
-        clinicaService.adicionarServicoAoAtendimento(atendimento1, banho);
-        clinicaService.adicionarServicoAoAtendimento(atendimento1, tosa);
-        clinicaService.adicionarServicoAoAtendimento(atendimento1, vacinacao);
-        System.out.println(atendimento1);
-        System.out.printf("Valor total do atendimento 1: R$%.2f%n",
-                clinicaService.calcularValorTotalAtendimento(atendimento1));
-
-        // Atendimento 2 — Mingau: consulta + vacinação
-        Atendimento atendimento2 = clinicaService.abrirAtendimento(gato, LocalDateTime.now());
-        clinicaService.adicionarServicoAoAtendimento(atendimento2, consulta);
-        clinicaService.adicionarServicoAoAtendimento(atendimento2, vacinacao);
-        System.out.println(atendimento2);
-        System.out.printf("Valor total do atendimento 2: R$%.2f%n",
-                clinicaService.calcularValorTotalAtendimento(atendimento2));
-
-        // ===== Listagem geral de atendimentos =====
-        System.out.println("\n=== LISTA DE TODOS OS ATENDIMENTOS ===");
-        for (Atendimento a : clinicaService.listarAtendimentos()) {
-            System.out.println(a);
+        System.out.println("\n=== BUSCA POR TUTOR ===");
+        for (Animal animal : clinicaService.buscarAnimaisPorNomeTutor("Ana")) {
+            System.out.println(animal);
         }
     }
 }
