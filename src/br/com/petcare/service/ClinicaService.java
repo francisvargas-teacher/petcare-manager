@@ -211,4 +211,36 @@ public class ClinicaService {
 
         return resultado;
     }
+
+    public void exibirRelatorioGeral() {
+
+    int totalCachorros = 0;
+    int totalGatos = 0;
+
+    for (Animal animal : banco.listarAnimais()) {
+
+        if (animal instanceof Cachorro) {
+            totalCachorros++;
+        }
+
+        if (animal instanceof Gato) {
+            totalGatos++;
+        }
+    }
+
+    System.out.println("\n========== RELATÓRIO GERAL DA CLÍNICA ==========");
+    System.out.println("Total de tutores cadastrados: "
+            + banco.listarTutores().size());
+
+    System.out.println("Total de animais cadastrados: "
+            + banco.listarAnimais().size());
+
+    System.out.println("Total de consultas cadastradas: "
+            + banco.listarConsultas().size());
+
+    System.out.println("Total de cachorros: " + totalCachorros);
+    System.out.println("Total de gatos: " + totalGatos);
+
+    System.out.println("================================================");
+    }
 }

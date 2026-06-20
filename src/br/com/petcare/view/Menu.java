@@ -31,7 +31,8 @@ public class Menu {
             System.out.println("4. Listar animais");
             System.out.println("5. Listar consultas");
             System.out.println("6. Agendar consulta");
-            System.out.println("7. Sair");
+            System.out.println("7. Exibir relatório geral");
+            System.out.println("8. Sair");
             System.out.print("Escolha uma opção: ");
 
             int opcao = scanner.nextInt();
@@ -113,14 +114,18 @@ public class Menu {
                         System.out.println("✅ Consulta agendada com sucesso para amanhã!");
                     }
                     break;
-
+                
                 case 7:
+                    clinicaService.exibirRelatorioGeral();
+                    break;
+
+                case 8:
                     System.out.println("\nEncerrando o sistema. Até logo!");
                     executando = false;
                     break;
 
                 default:
-                    System.out.println("\n❌ Opção inválida! Digite um número de 1 a 7.");
+                    System.out.println("\n❌ Opção inválida! Digite um número de 1 a 8.");
             }
         }
         scanner.close();
