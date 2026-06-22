@@ -9,6 +9,11 @@ import br.com.petcare.model.Consulta;
 import br.com.petcare.model.Tutor;
 import br.com.petcare.service.ClinicaService;
 
+//Feature 14: Estoque de medicmentos
+
+import br.com.petcare.model.Medicamento;
+import java.time.LocalDate;
+
 public class Menu {
     private Scanner scanner;
     private ClinicaService clinicaService;
@@ -31,7 +36,12 @@ public class Menu {
             System.out.println("4. Listar animais");
             System.out.println("5. Listar consultas");
             System.out.println("6. Agendar consulta");
-            System.out.println("7. Sair");
+            System.out.println("7. Cadastrar medicamento");
+            System.out.println("8. Listar medicamento");
+            System.out.println("9. Entrada de estoque");
+            System.out.println("10. Saída de estoque");
+            System.out.println("11. Medicamentos com estoque baixo");
+            System.out.println("12. Sair");
             System.out.print("Escolha uma opção: ");
 
             int opcao = scanner.nextInt();
@@ -115,12 +125,32 @@ public class Menu {
                     break;
 
                 case 7:
+                    cadastrarMedicamento();
+                    break;
+
+                case 8:
+                    listarMedicamentos();
+                    break;
+
+                case 9:
+                    entradaEstoqueMedicamento();
+                    break;
+
+                case 10:
+                    saidaEstoqueBaixo();
+                    break;
+
+                case 11:
+                    listarEstoqueBaixo();
+                    break;
+
+                case 12:
                     System.out.println("\nEncerrando o sistema. Até logo!");
                     executando = false;
                     break;
 
                 default:
-                    System.out.println("\n❌ Opção inválida! Digite um número de 1 a 7.");
+                    System.out.println("\n❌ Opção inválida! Digite um número de 1 a 12.");
             }
         }
         scanner.close();
@@ -171,6 +201,84 @@ public class Menu {
         } else {
             System.out.println("❌ Opção inválida.");
             return null;
+        }
+    }
+
+    private void cadastrarMedicamento(){
+        System.out.println("\n--- NOVO MEDICAMENTO ---");
+
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Descrição: ");
+        String descricao = scanner.nextLine();
+
+        System.out.print("Fabricante: ");
+        String fabricante = scanner.nextLine();
+
+        System.out.println("Concentração: ");
+        String concetracao = scanner.nextLine();
+
+        System.out.print("Quantidade inicial: ");
+        int quantidadeInicial = scanner.nextInt();
+
+        System.out.print("Estoque mínimo: ");
+        int estoqueMinimo = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Data de validade (AAAA-MM-DD): ");
+        String dataTexto = scanner.nextLine();
+
+        LocalDate dataValidade = LocalDate.parse(dataTexto);
+
+        clinicaService.cadastrarMedicamento(nome, descricao, fabricante, concetracao, quantidadeInicial, estoqueMinimo, dataValidade);
+
+        System.out.println("Medicamento cadastrado com sucesso!");
+    }
+
+    private void listarMedicamentos(){
+        System.out.println("\n=== ESTOQUE DE MEDICAMENTOS ===");
+
+        for(Medicamento medicamento : clinicaService.listarMedicamentos()){
+            System.out.println(medicamento);
+        }
+    }
+
+    private void entradaEstoqueMedicamento(){
+        System.out.println("\n=== ENTRADA DE ESTOQUE ===");
+
+        System.out.print("ID do medicamento: ");
+        int id = scanner.nextInt();
+
+        System.out.print("Quantidade para adicionar: ");
+        int quantidade = scanner.nextInt();
+        scanner.nextLine();
+
+        clinicaService.adicionarEstoqueMedicamento(id, quantidade);
+
+        System.out.println("Estoque atualizado com sucesso!");
+    }
+
+    private void saidaEstoqueBaixo(){
+        System.out.println("\n === SAÍDA DE ESTOQUE ===");
+
+        System.out.print("ID do medicamento: ");
+        int id = scanner.nextInt();
+
+        System.out.print("Quantidade para retirar: ");
+        int quantidade = scanner.nextInt();
+        scanner.nextLine();
+
+        clinicaService.retirarEstoqueMedicamento(id, quantidade);
+
+        System.out.println("Saida registrada com sucesso!");
+    }
+
+    private void listarEstoqueBaixo(){
+        System.out.println("\n ===MEDICAMENTOS COM ESTOQUE BAIXO===");
+
+        for (Medicamento medicamento : clinicaService.listarMedicamentosComEstoqueBaixo()){
+            System.out.println(medicamento);
         }
     }
 }

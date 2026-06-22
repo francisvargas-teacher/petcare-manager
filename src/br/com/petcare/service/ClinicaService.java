@@ -7,11 +7,13 @@ import br.com.petcare.model.Consulta;
 import br.com.petcare.model.Gato;
 import br.com.petcare.model.StatusConsulta;
 import br.com.petcare.model.Tutor;
+import br.com.petcare.model.Medicamento;
 import br.com.petcare.repository.BancoMemoria;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class ClinicaService {
 
@@ -23,6 +25,9 @@ public class ClinicaService {
     // --- Feature 07: Cálculo de pagamento ---
     private int proximoIdServico = 1;
     private int proximoIdAtendimento = 1;
+
+    // -- Feature 14: Estoque medicamentos ----
+    private int proximoIdMedicamento = 1;
 
     public ClinicaService(BancoMemoria banco) {
         this.banco = banco;
@@ -206,6 +211,71 @@ public class ClinicaService {
                     .contains(nomeTutor.toLowerCase())) {
 
                 resultado.add(animal);
+            }
+        }
+
+        return resultado;
+    }
+    // Estoque de Medicamentos: Feature 14
+    public Medicamento cadastrarMedicamento(String nome, String descricao, String fabricante, String concetracao, int quantidadeInicial, int estoqueMinimo, LocalDate dataValidade){
+
+        if (textoVazio(nome)){
+            throw new IllegalArgumentException("Nome do medicamento não pode ser vazio.");
+        }
+        if (quantidadeInicial < 0){
+            throw new IllegalArgumentException("Quantidade inicial não pode ser negativa.");
+        }
+        if (estoqueMinimo < 0){
+            throw new IllegalArgumentException("Estoque mínimo não pode ser negativo");
+        }
+
+        Medicamento medicamento = new Medicamento(
+                proximoIdMedicamento++,
+                nome,
+                descricao,
+                fabricante,
+                concetracao,
+                quantidadeInicial,
+                estoqueMinimo,
+                dataValidade
+        );
+        banco.salvarMedicamento(medicamento);
+        return medicamento;
+    }
+
+    public List<Medicamento> listarMedicamentos(){
+        return banco.listarMedicamentos();
+    }
+
+    public Medicamento buscarMedicamentoPorId(int id){
+        return banco.buscarMedicamentoPorId(id);
+    }
+
+    public void adicionarEstoqueMedicamento(int idMedicamento, int quantidade){
+        Medicamento medicamento = banco.buscarMedicamentoPorId(idMedicamento);
+
+        if(medicamento == null){
+            throw new IllegalArgumentException("Medicamento não encontrado.")
+        }
+
+        medicamento.adicionarEstoque(quantidade);
+    }
+
+    public void retirarEstoqueMedicamento(int idMedicamento, int quantidade){
+        Medicamento medicamento = banco.buscarMedicamentoPorId(idMedicamento);
+
+        if(medicamento == null){
+            throw new IllegalArgumentException("Medicamento não encontrado.");
+        }
+        medicamento.retirarEstoque(quantidade);
+    }
+
+    public List<Medicamento> listarMedicamentosComEstoqueBaixo(){
+        List<Medicamento> resultado = new ArrayList<>();
+
+        for(Medicamento medicamento : banco.listarMedicamentos()){
+            if(medicamento.estaComEstoqueBaixo()){
+                resultado.add(medicamento);
             }
         }
 
