@@ -5,6 +5,7 @@ import br.com.petcare.model.Atendimento;
 import br.com.petcare.model.Consulta;
 import br.com.petcare.model.ServicoClinica;
 import br.com.petcare.model.Tutor;
+import br.com.petcare.model.Medicamento;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class BancoMemoria {
     private List<Tutor> tutores = new ArrayList<>();
     private List<Animal> animais = new ArrayList<>();
     private List<Consulta> consultas = new ArrayList<>();
+    private List<Medicamento> medicamentos = new ArrayList<>();
 
     // --- Feature 07: Cálculo de pagamento ---
     private List<ServicoClinica> servicos = new ArrayList<>();
@@ -100,6 +102,22 @@ public class BancoMemoria {
         for (Atendimento atendimento : atendimentos) {
             if (atendimento.getId() == id) {
                 return atendimento;
+            }
+        }
+        return null;
+    }
+    // ============ Estoque de medicamentos (feature 14) ========
+
+    public void salvarMedicamento(Medicamento medicamento){
+        medicamentos.add(medicamento);
+    }
+    public List<Medicamento> listarMedicamentos(){
+        return medicamentos;
+    }
+    public Medicamento buscarMedicamentoPorId(int id){
+        for (Medicamento medicamento : medicamentos){
+            if (medicamento.getId() == id){
+                return medicamento;
             }
         }
         return null;
