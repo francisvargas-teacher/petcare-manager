@@ -5,6 +5,7 @@ import br.com.petcare.model.Atendimento;
 import br.com.petcare.model.Cachorro;
 import br.com.petcare.model.Consulta;
 import br.com.petcare.model.Gato;
+import br.com.petcare.model.ServicoClinica;
 import br.com.petcare.model.StatusConsulta;
 import br.com.petcare.model.Tutor;
 import br.com.petcare.model.Medicamento;

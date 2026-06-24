@@ -8,6 +8,7 @@ public class Consulta {
     private LocalDateTime dataHora;
     private String motivo;
     private String observacao;
+    private StatusConsulta status;
 
     public Consulta(int id, Animal animal, LocalDateTime dataHora, String motivo) {
         this.id = id;
@@ -15,6 +16,7 @@ public class Consulta {
         this.dataHora = dataHora;
         this.motivo = motivo;
         this.observacao = "";
+        this.status = StatusConsulta.AGENDADA;
     }
 
     public int getId() {
@@ -53,6 +55,14 @@ public class Consulta {
         this.observacao = observacao;
     }
 
+    public StatusConsulta getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusConsulta status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Consulta{" +
@@ -62,6 +72,7 @@ public class Consulta {
                 ", dataHora=" + dataHora +
                 ", motivo='" + motivo + '\'' +
                 ", observacao='" + observacao + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
